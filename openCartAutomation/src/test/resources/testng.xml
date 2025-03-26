@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="OpenCart API Suite">
+
+    <!-- Define the order of test classes -->
+    <test name="User API Tests">
+        <classes>
+            <!-- Run Login test first -->
+            <class name="TestCases.User.loginTestCases" />
+            
+            <!-- Run AddUserDetails test after Login -->
+            <class name="TestCases.User.AddUserDetails" />
+            
+            <!-- Run AddToCart test after AddUserDetails -->
+            <class name="TestCases.Cart.AddToCart" />
+            
+            <!-- Run viewCart test after AddUserDetails -->
+           	<class name="TestCases.Cart.viewCart" />
+           
+        </classes>
+    </test>
+
+</suite>

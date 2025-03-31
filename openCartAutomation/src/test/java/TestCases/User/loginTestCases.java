@@ -63,7 +63,7 @@ public class loginTestCases {
         }
 
         if (sessionCookie != null && !sessionCookie.isEmpty()) {
-            System.out.println("✅ Session Cookie Captured: " + sessionCookie);
+            System.out.println("Session Cookie Captured: " + sessionCookie);
 
             // Update config.properties with token and session cookie
             Map<String, String> updates = Map.of(
@@ -72,7 +72,7 @@ public class loginTestCases {
             );
             updateConfigFile(updates);
         } else {
-            System.out.println("⚠️ Failed to capture session cookie.");
+            System.out.println("Failed to capture session cookie.");
         }
     }
 
@@ -83,7 +83,7 @@ public class loginTestCases {
         try (FileInputStream in = new FileInputStream(configPath)) {
             props.load(in);
         } catch (IOException e) {
-            System.out.println("❌ Failed to load config.properties file: " + e.getMessage());
+            System.out.println("Failed to load config.properties file: " + e.getMessage());
             return;
         }
 
@@ -96,9 +96,9 @@ public class loginTestCases {
         // Save the updated properties
         try (FileOutputStream out = new FileOutputStream(configPath)) {
             props.store(out, "Updated properties dynamically after login");
-            System.out.println("✅ Config properties updated successfully!");
+            System.out.println("Config properties updated successfully!");
         } catch (IOException e) {
-            System.out.println("❌ Failed to update config.properties file: " + e.getMessage());
+            System.out.println("Failed to update config.properties file: " + e.getMessage());
         }
     }
 }

@@ -35,6 +35,6 @@ public class configReader {
     // Reload properties dynamically before making API calls
     public static void reloadProperties() {
         loadProperties();  // Reload properties before reading them
-        System.out.println("✅ Config properties reloaded successfully.");
+        System.out.println("Config properties reloaded successfully.");
     }
 }

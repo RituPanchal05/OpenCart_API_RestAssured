@@ -1,19 +1,17 @@
 package api.base;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeSuite;
+
+
 import api.utils.configReader;
-import static io.restassured.RestAssured.*;
+import io.restassured.RestAssured;
+import io.restassured.specification.RequestSpecification;
 
 
 public class base {
 
     protected static RequestSpecification request;
-
+   
     // Setup before all tests
     public static void setup() {
         RestAssured.baseURI = configReader.getProperty("baseURL");
@@ -24,4 +22,3 @@ public class base {
                 .contentType(configReader.getProperty("contentType"));
     }
 }
-

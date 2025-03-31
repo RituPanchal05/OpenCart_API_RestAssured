@@ -9,6 +9,7 @@ public class APIEndpointReader {
 
     private static Properties properties;
 
+    // 
     static {
         try {
             String endpointPath = "src/main/resources/API_Endpoints.properties";

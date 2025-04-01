@@ -1,0 +1,35 @@
+name: Maven Build
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # You can change this to another OS if necessary
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Java
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      # Set up Maven wrapper (if using it)
+      - name: Set up Maven Wrapper
+        run: |
+          chmod +x ./mvnw
+
+      # Run Maven build with the wrapper
+      - name: Build with Maven
+        run: ./mvnw clean install # Use clean install or your desired Maven command
+
+      # Optionally, you can add steps to upload build artifacts, run tests, etc.

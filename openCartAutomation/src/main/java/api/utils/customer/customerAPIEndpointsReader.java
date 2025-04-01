@@ -10,7 +10,7 @@ public class customerAPIEndpointsReader {
 
     static {
         try {
-            String endpointPath = "src/main/resources/customer/customer_API_Endpoints.properties";
+            String endpointPath = "/home/ritu.panchal@simform.dom/git/repository/openCartAutomation/src/main/resources/customer/customer_API_Endpoints.properties";
             FileInputStream fis = new FileInputStream(endpointPath);
             properties = new Properties();
             properties.load(fis);

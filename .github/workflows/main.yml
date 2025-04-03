@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: REST Assured CI
 
 on:
   push:
@@ -9,38 +9,29 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Debug - Print Current Directory
-        run: pwd
-
-      - name: Debug - List All Files and Directories
-        run: ls -R
-
-      - name: Find Correct Project Directory
-        run: |
-          PROJECT_DIR=$(find . -type d -name "OpenCart_API_RestAssured" | head -n 1)
-          if [ -z "$PROJECT_DIR" ]; then
-            echo "ERROR: OpenCart_API_RestAssured directory not found!"
-            exit 1
-          fi
-          echo "PROJECT_PATH=$PROJECT_DIR" >> $GITHUB_ENV
-
-      - name: Debug - Show Found Directory
-        run: echo "Using project path: ${{ env.PROJECT_PATH }}"
-
-      - name: Set Up JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'maven'
 
-      - name: Run Maven Clean Install
-        run: |
-          cd ${{ env.PROJECT_PATH }}
-          mvn clean install
+      - name: Install Dependencies
+        run: mvn clean install -DskipTests
+
+      - name: Run REST Assured Tests
+        run: mvn test
+
+      - name: Archive Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports/

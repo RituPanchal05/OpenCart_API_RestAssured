@@ -39,7 +39,7 @@ public class customerLogin {
     }
 
     // ------------------------------------- Customer Login API ------------------------------------------------
-    @Test(priority = 1)
+    @Test(priority = 2)
     public void customerLogin() {
         System.out.println("-----------------------------Customer Login---------------------------------------");
 

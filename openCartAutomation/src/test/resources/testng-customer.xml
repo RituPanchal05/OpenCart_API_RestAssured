@@ -2,8 +2,9 @@
 <suite name="Customer Suite" parallel="tests" thread-count="2">
     <test name="Customer Tests">
         <classes>
-            <class name="TestCases.Customer.customerLogin"/>
+        
             <class name="TestCases.Customer.customerRegistration"/>
+            <class name="TestCases.Customer.customerLogin"/>
             <class name="TestCases.Customer.customerAddToCart"/>
         </classes>
     </test>

@@ -32,6 +32,8 @@ public class customerRegistration {
         // Load base URL and credentials from config.properties
         RestAssured.baseURI = customerConfigReader.getProperty("customerBaseURL");
         configReader.reloadProperties();
+        
+        sessionCookie = configReader.getProperty("sessionCookie");
     }
 
 //------------------------------------- Customer Registration API ----------------------------------------
@@ -50,7 +52,8 @@ public class customerRegistration {
         // Send data using formParams()
         Response response = given()
                 .contentType("application/x-www-form-urlencoded")
-                .formParams(customerData) // Passing form data
+                .formParams(customerData)
+                .cookie("OCSESSID", sessionCookie)
                 .log().all()
                 .when()
                 .post(cRegisterURL)

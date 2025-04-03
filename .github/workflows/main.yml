@@ -22,12 +22,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Debug Current Directory
+      - name: Debug Directory
         run: pwd && ls -la
 
-      - name: Change Directory to Project
-        run: cd OpenCart_API_RestAssured && ls -la
-        continue-on-error: true
+      - name: Verify Project Structure
+        run: |
+          cd OpenCart_API_RestAssured || exit 1
+          ls -la
 
       - name: Build with Maven
         run: mvn clean install

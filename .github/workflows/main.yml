@@ -23,6 +23,8 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
+      - name: Change Directory to Project Root
+        run: cd OpenCart_API_RestAssured
+
       - name: Run Tests with Maven
         run: mvn clean test
-

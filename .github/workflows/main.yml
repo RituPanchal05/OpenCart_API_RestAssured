@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: OpenCart API Automation CI
 
 on:
   push:
@@ -14,38 +14,35 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Debug - Print Current Directory
-        run: pwd
-
-      - name: Debug - List Files and Folders
-        run: ls -la
-
-      - name: Debug - Find the Correct Project Directory
-        run: find . -type d -name "OpenCart_API_RestAssured" || echo "Directory not found"
-
-      - name: Set Correct Directory
-        run: |
-          if [ -d "./OpenCart_API_RestAssured" ]; then
-            echo "PROJECT_PATH=./OpenCart_API_RestAssured" >> $GITHUB_ENV
-          elif [ -d "./repo/OpenCart_API_RestAssured" ]; then
-            echo "PROJECT_PATH=./repo/OpenCart_API_RestAssured" >> $GITHUB_ENV
-          else
-            echo "Error: OpenCart_API_RestAssured directory not found!"
-            exit 1
-          fi
-
-      - name: Debug - Show Set Directory
-        run: echo "Using project path: ${{ env.PROJECT_PATH }}"
-
-      - name: Set Up JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Run Maven Clean Install
+      - name: Print Current Directory
         run: |
-          cd ${{ env.PROJECT_PATH }}
-          mvn clean install
+          echo "Current Directory:"
+          pwd
+          echo "Listing Files:"
+          ls -la
+
+      - name: Find OpenCart_API_RestAssured Directory
+        run: |
+          find . -type d -name "OpenCart_API_RestAssured"
+
+      - name: Move to Correct Directory
+        run: |
+          if [ -d "OpenCart_API_RestAssured" ]; then
+            cd OpenCart_API_RestAssured
+          elif [ -d "./some-other-folder/OpenCart_API_RestAssured" ]; then
+            cd ./some-other-folder/OpenCart_API_RestAssured
+          else
+            echo "ERROR: OpenCart_API_RestAssured directory not found!"
+            exit 1
+          fi
+
+      - name: Build with Maven
+        run: mvn clean install

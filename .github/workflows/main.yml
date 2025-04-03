@@ -1,4 +1,4 @@
-name: OpenCart API Tests
+name: CI Pipeline
 
 on:
   push:
@@ -9,19 +9,43 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Debug - Print Current Directory
+        run: pwd
+
+      - name: Debug - List Files and Folders
+        run: ls -la
+
+      - name: Debug - Find the Correct Project Directory
+        run: find . -type d -name "OpenCart_API_RestAssured" || echo "Directory not found"
+
+      - name: Set Correct Directory
+        run: |
+          if [ -d "./OpenCart_API_RestAssured" ]; then
+            echo "PROJECT_PATH=./OpenCart_API_RestAssured" >> $GITHUB_ENV
+          elif [ -d "./repo/OpenCart_API_RestAssured" ]; then
+            echo "PROJECT_PATH=./repo/OpenCart_API_RestAssured" >> $GITHUB_ENV
+          else
+            echo "Error: OpenCart_API_RestAssured directory not found!"
+            exit 1
+          fi
+
+      - name: Debug - Show Set Directory
+        run: echo "Using project path: ${{ env.PROJECT_PATH }}"
 
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'maven'
 
-      - name: Run Tests with Maven
-        run: mvn clean test
+      - name: Run Maven Clean Install
+        run: |
+          cd ${{ env.PROJECT_PATH }}
+          mvn clean install
